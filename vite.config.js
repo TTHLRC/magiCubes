@@ -22,8 +22,7 @@ export default defineConfig(({ mode }) => {
       proxy: {
         '/api': {
           target: env.VITE_API_BASE_URL || 'https://web-production-6b633.up.railway.app',
-          changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/api/, '')
+          changeOrigin: true
         }
       }
     }
