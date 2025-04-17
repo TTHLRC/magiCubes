@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { selectedMaterial_Hinge, preMaterial_Hinge } from '../config/materials'
+import { API_CONFIG, getFullUrl, getAuthHeader } from '@/config/api'
 
 export class SceneStateManager {
   constructor(cubeManager) {
@@ -79,11 +80,11 @@ export class SceneStateManager {
         connectedCubes: (hinge.userData?.connectedCubes || []).map(cube => cube.uuid)
       }))
     }
-    const response = await fetch('/saveCubeData', {
+    const response = await fetch(getFullUrl(API_CONFIG.ENDPOINTS.SAVE_CUBE_DATA), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
+        ...getAuthHeader()
       },
       body: JSON.stringify(sceneState)
     })
@@ -99,10 +100,10 @@ export class SceneStateManager {
       sceneState = importedState
     } else {
       // 否则从本地存储加载
-      const response = await fetch('/getCubeData', {
+      const response = await fetch(getFullUrl(API_CONFIG.ENDPOINTS.GET_CUBE_DATA), {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          ...getAuthHeader()
         }
       })
       const data = await response.json()

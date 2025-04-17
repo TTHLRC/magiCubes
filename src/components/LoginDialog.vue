@@ -85,6 +85,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { API_CONFIG, getFullUrl, getAuthHeader } from '@/config/api'
 
 const router = useRouter()
 const isVisible = ref(false)
@@ -129,7 +130,7 @@ const handleLogin = async () => {
 
     try {
         isLoading.value = true
-        const response = await fetch('/login', {
+        const response = await fetch(getFullUrl(API_CONFIG.ENDPOINTS.LOGIN), {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -153,7 +154,6 @@ const handleLogin = async () => {
         router.push('/') // 登录成功后跳转到仪表盘页面
     } catch (error) {
         console.log(error);
-
         errorMessage.value = error.message
     } finally {
         isLoading.value = false
@@ -173,7 +173,7 @@ const handleRegister = async () => {
 
     try {
         isLoading.value = true
-        const response = await fetch('/register', {
+        const response = await fetch(getFullUrl(API_CONFIG.ENDPOINTS.REGISTER), {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
