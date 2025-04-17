@@ -1,5 +1,5 @@
 export const API_CONFIG = {
-    BASE_URL: '/api',
+    BASE_URL: import.meta.env.VITE_API_BASE_URL || 'https://web-production-6b633.up.railway.app',
     ENDPOINTS: {
         LOGIN: '/login',
         REGISTER: '/register',
